@@ -9,29 +9,29 @@ export const theme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#0B6655',
-      light: '#0E826D',
-      dark: '#084F42',
+      main: '#EA4335',
+      light: '#F06E63',
+      dark: '#C53023',
       contrastText: '#FFFFFF',
     },
     secondary: {
-      main: '#05B19A',
-      light: '#2EC4B0',
-      dark: '#048F7D',
+      main: '#1A1A1A',
+      light: '#4D4D4D',
+      dark: '#000000',
       contrastText: '#FFFFFF',
     },
     background: {
-      default: '#F5F8F7',
+      default: '#FFFFFF',
       paper: '#FFFFFF',
     },
     text: {
-      primary: '#1A2E2A',
-      secondary: '#5A6F6A',
+      primary: '#1A1A1A',
+      secondary: '#666666',
     },
-    divider: 'rgba(11, 102, 85, 0.08)',
+    divider: 'rgba(0, 0, 0, 0.08)',
   },
   shape: {
-    borderRadius: 12,
+    borderRadius: 8,
   },
   typography: {
     fontFamily: bodyFont,
@@ -86,14 +86,14 @@ export const theme = createTheme({
     MuiCssBaseline: {
       styleOverrides: {
         body: {
-          backgroundColor: '#F5F8F7',
+          backgroundColor: '#FFFFFF',
         },
       },
     },
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: 12,
+          borderRadius: 8,
           boxShadow: 'none',
           '&:hover': {
             boxShadow: 'none',
@@ -104,7 +104,7 @@ export const theme = createTheme({
     MuiCard: {
       styleOverrides: {
         root: {
-          borderRadius: 12,
+          borderRadius: 8,
           boxShadow: softShadow,
           border: 'none',
         },
@@ -113,7 +113,7 @@ export const theme = createTheme({
     MuiPaper: {
       styleOverrides: {
         root: {
-          borderRadius: 12,
+          borderRadius: 8,
           backgroundImage: 'none',
         },
         elevation1: {
@@ -124,12 +124,12 @@ export const theme = createTheme({
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          borderRadius: 12,
+          borderRadius: 8,
           '& .MuiOutlinedInput-notchedOutline': {
-            borderColor: 'rgba(11, 102, 85, 0.12)',
+            borderColor: 'rgba(0, 0, 0, 0.12)',
           },
           '&:hover .MuiOutlinedInput-notchedOutline': {
-            borderColor: 'rgba(11, 102, 85, 0.24)',
+            borderColor: 'rgba(0, 0, 0, 0.24)',
           },
         },
       },
@@ -137,7 +137,7 @@ export const theme = createTheme({
     MuiChip: {
       styleOverrides: {
         root: {
-          borderRadius: 12,
+          borderRadius: 8,
         },
       },
     },

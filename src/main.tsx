@@ -5,11 +5,13 @@ import CssBaseline from '@mui/material/CssBaseline'
 import App from './App.tsx'
 import { theme } from './theme/theme.ts'
 
+
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <App />
+        <App />
     </ThemeProvider>
   </StrictMode>,
 )
