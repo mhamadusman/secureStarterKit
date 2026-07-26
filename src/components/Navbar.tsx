@@ -3,14 +3,14 @@ import { Box, AppBar, Toolbar, Typography, Button, Avatar, IconButton, Divider }
 import { Home, AccountCircle, ExitToApp, KeyboardArrowDown } from '@mui/icons-material'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
+import { useCurrentUser } from '../hooks/useCurrentUser.hook'
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false)
     const navigate = useNavigate()
-
+    const {data} = useCurrentUser()
     const handleClose = () => {
         setIsOpen(false)
-
 
     }
 
@@ -77,7 +77,7 @@ export default function Navbar() {
                         }}
                     >
                         <Avatar
-                            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200"
+                            src={data?.profileImage}
                             alt="User Profile"
                             sx={{ width: 36, height: 36, border: '1px solid', borderColor: 'divider' }}
 

@@ -1,17 +1,12 @@
 import { Box, Card, Typography, Avatar, Grid, Chip, Divider } from '@mui/material'
 import { AccountCircle, Email, Security, CalendarToday, Update, Hub } from '@mui/icons-material'
+import { useCurrentUser } from '../hooks/useCurrentUser.hook'
 
 export default function Dashboard() {
-  const user = {
-    username: 'Jane Doe',
-    email: 'jane.doe@uisocial.com',
-    isEmailVerified: true,
-    provider: 'Google',
-    createdAt: 'July 15, 2026',
-    updatedAt: 'July 20, 2026',
-    profileImage: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400',
+  const { data: user } = useCurrentUser()
+  if(!user){
+    return
   }
-
   return (
     <Box
       sx={{
@@ -20,29 +15,25 @@ export default function Dashboard() {
         minHeight: 'calc(100vh - 64px)',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center', // Centers everything vertically for a cleaner, compact layout
+        justifyContent: 'center',
         alignItems: 'center',
       }}
     >
-      <Box sx={{ width: '100%', maxWidth: 840 }}> {/* Wraps form area to tightly restrict max expansion width */}
-        {/* Welcome Header */}
+      <Box sx={{ width: '100%', maxWidth: 840 }}>
         <Box sx={{ mb: 3, px: 0.5 }}>
           <Typography variant="h5" sx={{ mb: 0.5, fontWeight: 700 }}>
-            Welcome Back, {user.username.split(' ')[0]}!
+            Welcome Back, {user?.username.split(' ')[0]}!
           </Typography>
           <Typography variant="body2" color="text.secondary">
             Manage your account profile and security settings below.
           </Typography>
         </Box>
 
-        {/* Grid Container */}
         <Grid container spacing={3}>
-          
-          {/* Left Card: Profile Overview */}
           <Grid size={{ xs: 12, md: 6 }}>
             <Card
               sx={{
-                p: 3, // Shrunk internal card padding from 4 to 3
+                p: 3,
                 height: '100%',
                 display: 'flex',
                 flexDirection: 'column',
@@ -54,7 +45,7 @@ export default function Dashboard() {
                 src={user.profileImage}
                 alt={user.username}
                 sx={{
-                  width: 80, // Shrunk dimension size from 100 to 80
+                  width: 80,
                   height: 80,
                   mb: 2,
                   border: '3px solid',
@@ -84,7 +75,6 @@ export default function Dashboard() {
 
               <Divider sx={{ width: '100%', mb: 2 }} />
 
-              {/* Account Information Details */}
               <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 2 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
                   <AccountCircle sx={{ color: 'text.secondary', fontSize: '1.15rem' }} />
@@ -113,11 +103,10 @@ export default function Dashboard() {
             </Card>
           </Grid>
 
-          {/* Right Card: Security & Metadata */}
           <Grid size={{ xs: 12, md: 6 }}>
             <Card
               sx={{
-                p: 3, // Shrunk internal card padding from 4 to 3
+                p: 3,
                 height: '100%',
                 display: 'flex',
                 flexDirection: 'column',
@@ -134,7 +123,6 @@ export default function Dashboard() {
               <Divider sx={{ width: '100%', mb: 2 }} />
 
               <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 2 }}>
-                {/* Identity Provider */}
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
                   <Hub sx={{ color: 'text.secondary', fontSize: '1.15rem' }} />
                   <Box>
@@ -158,7 +146,6 @@ export default function Dashboard() {
                   </Box>
                 </Box>
 
-                {/* Account Verification Status */}
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
                   <Security sx={{ color: 'text.secondary', fontSize: '1.15rem' }} />
                   <Box>
@@ -171,7 +158,6 @@ export default function Dashboard() {
                   </Box>
                 </Box>
 
-                {/* Created At Timestamps */}
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
                   <CalendarToday sx={{ color: 'text.secondary', fontSize: '1.15rem' }} />
                   <Box>
@@ -184,7 +170,6 @@ export default function Dashboard() {
                   </Box>
                 </Box>
 
-                {/* Updated At Timestamps */}
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
                   <Update sx={{ color: 'text.secondary', fontSize: '1.15rem' }} />
                   <Box>
@@ -199,7 +184,6 @@ export default function Dashboard() {
               </Box>
             </Card>
           </Grid>
-
         </Grid>
       </Box>
     </Box>

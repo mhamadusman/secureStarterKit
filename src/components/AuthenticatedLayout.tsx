@@ -1,20 +1,13 @@
 import { useEffect } from 'react'
 import { Box } from '@mui/material'
 import { Outlet, Navigate } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
 import Navbar from './Navbar'
 import LoadingIndicator from './LoadingIndicator'
-import { AuthService } from '../Services/authService'
 import { handleApiError } from '../utils/apiHandler'
+import { useCurrentUser } from '../hooks/useCurrentUser.hook'
 
 export default function AuthenticatedLayout() {
-  const { data: user, isLoading, isError, error } = useQuery({
-    queryKey: ['currentUser'],
-    queryFn: AuthService.getCurrentUser,
-    retry: false,
-    staleTime: 1000 * 60 * 5,
-  })
-
+  const { data: user, isLoading, isError, error } = useCurrentUser()
   useEffect(() => {
     if (isError && error) {
       handleApiError(error, undefined, 'Session expired. Please log in again.')

@@ -1,15 +1,12 @@
-import { Box, Card, Typography, Avatar, Chip, Divider } from '@mui/material'
+import { Box, Card, Typography, Avatar, Divider } from '@mui/material'
 import { AccountCircle, Email, Shield, Badge, CalendarToday } from '@mui/icons-material'
+import { useCurrentUser } from '../hooks/useCurrentUser.hook'
 
 export default function Profile() {
-  // Dummy data mirroring your system architecture variables
-  const user = {
-    username: 'Jane Doe',
-    email: 'jane.doe@uisocial.com',
-    isEmailVerified: true,
-    role: 'Administrator',
-    joinedAt: 'July 15, 2026',
-    profileImage: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400',
+  const { data: user } = useCurrentUser()
+
+  if (!user) {
+    return null
   }
 
   return (
@@ -24,8 +21,7 @@ export default function Profile() {
         alignItems: 'center',
       }}
     >
-      <Box sx={{ width: '100%', maxWidth: 440 }}> {/* Constrained container to hold a single clean card */}
-        {/* Profile Header */}
+      <Box sx={{ width: '100%', maxWidth: 440 }}>
         <Box sx={{ mb: 3, textAlign: 'center' }}>
           <Typography variant="h5" sx={{ mb: 0.5, fontWeight: 700 }}>
             My Profile
@@ -35,7 +31,6 @@ export default function Profile() {
           </Typography>
         </Box>
 
-        {/* Single Unified Profile Card */}
         <Card
           sx={{
             p: 4,
@@ -57,31 +52,14 @@ export default function Profile() {
               boxShadow: '0 4px 14px rgba(234, 67, 53, 0.15)',
             }}
           />
-          
+
           <Typography variant="h6" sx={{ mb: 0.5, fontWeight: 600 }}>
             {user.username}
           </Typography>
 
-          <Chip
-            label={user.role}
-            size="small"
-            sx={{ 
-              fontWeight: 600, 
-              fontSize: '0.7rem', 
-              mb: 3,
-              borderRadius: 1.5,
-              bgcolor: 'rgba(234, 67, 53, 0.08)',
-              color: 'primary.main',
-              border: '1px solid',
-              borderColor: 'primary.light'
-            }}
-          />
-
           <Divider sx={{ width: '100%', mb: 3 }} />
 
-          {/* Account Information Details Grid Stack */}
           <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 2.5 }}>
-            
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
               <AccountCircle sx={{ color: 'text.secondary', fontSize: '1.2rem' }} />
               <Box>
@@ -112,7 +90,14 @@ export default function Profile() {
                 <Typography variant="caption" color="text.secondary" sx={{ display: 'block', lineHeight: 1.2 }}>
                   Verification Status
                 </Typography>
-                <Typography variant="body2" sx={{ fontWeight: 500, fontSize: '0.85rem', color: user.isEmailVerified ? 'success.main' : 'warning.main' }}>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    fontWeight: 500,
+                    fontSize: '0.85rem',
+                    color: user.isEmailVerified ? 'success.main' : 'warning.main',
+                  }}
+                >
                   {user.isEmailVerified ? 'Verified Account' : 'Unverified Account'}
                 </Typography>
               </Box>
@@ -125,7 +110,7 @@ export default function Profile() {
                   Account Level
                 </Typography>
                 <Typography variant="body2" sx={{ fontWeight: 500, fontSize: '0.85rem' }}>
-                  {user.role}
+                  {user.provider}
                 </Typography>
               </Box>
             </Box>
@@ -137,11 +122,10 @@ export default function Profile() {
                   Member Since
                 </Typography>
                 <Typography variant="body2" sx={{ fontWeight: 500, fontSize: '0.85rem' }}>
-                  {user.joinedAt}
+                  {user.createdAt}
                 </Typography>
               </Box>
             </Box>
-
           </Box>
         </Card>
       </Box>
