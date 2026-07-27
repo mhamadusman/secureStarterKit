@@ -148,13 +148,13 @@ export default function Login() {
 
             <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 0.5, mb: 1.5 }}>
               <Link
-                href="#"
+                onClick={() => navigate('/forget-password')} 
                 variant="body2"
                 color="primary.main"
                 sx={{
                   textDecoration: 'none',
                   fontSize: '0.75rem',
-                  '&:hover': { textDecoration: 'underline' }
+                  cursor: 'pointer', fontWeight: 600
                 }}
               >
                 Forgot password ?

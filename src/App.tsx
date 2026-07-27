@@ -7,6 +7,8 @@ import SignUp from './components/SignUp'
 import Dashboard from './components/Dashboard'
 import Profile from './components/Profile'
 import AuthenticatedLayout from './components/AuthenticatedLayout'
+import ForgotPassword from './components/ForgetPassword'
+import ResetPassword from './components/ResetPassword'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,6 +27,8 @@ export default function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/forget-password" element={<ForgotPassword/>}/>
+          <Route path='/reset-password' element={<ResetPassword />}/>
 
           <Route element={<AuthenticatedLayout />}>
             <Route path="/dashboard" element={<Dashboard />} />
