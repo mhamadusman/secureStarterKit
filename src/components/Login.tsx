@@ -4,14 +4,16 @@ import { useForm } from 'react-hook-form'
 import { Google, GitHub, Visibility, VisibilityOff } from '@mui/icons-material'
 import LoadingIndicator from '../components/LoadingIndicator'
 import { useNavigate } from 'react-router-dom'
-import { AuthService } from '../Services/authService'
+import { authService, AuthService } from '../Services/authService'
 import { handleApiError } from '../utils/apiHandler'
+
 
 export default function Login() {
   const { register, handleSubmit, formState: { isSubmitting } } = useForm()
   const [showPassword, setShowPassword] = useState(false)
+  const [isGoogleLogin, setGoogleLogin] = useState(false)
+  const [isGitHubLogin, setGitHubLogin] = useState(false)
   const navigate = useNavigate()
-
   const onSubmit = async (data: any) => {
     try {
       await AuthService.login(data)
@@ -175,7 +177,7 @@ export default function Login() {
             </Button>
 
             <Divider sx={{ my: 1.5, color: 'text.secondary', fontSize: '0.8rem' }}>
-              or
+              or continue with
             </Divider>
 
             <Box sx={{ display: 'flex', gap: 1.5, mb: 1.5 }}>
@@ -183,6 +185,8 @@ export default function Login() {
                 fullWidth
                 variant="outlined"
                 color="primary"
+                disabled={isGoogleLogin}
+                onClick={()=>{setGoogleLogin(true), authService.loginWithGoogle()}}
                 startIcon={<Google />}
                 sx={{
                   py: 1,
@@ -194,12 +198,16 @@ export default function Login() {
                   },
                 }}
               >
+               
                 Google
+               
               </Button>
               <Button
                 fullWidth
                 variant="outlined"
                 color="primary"
+                disabled={isGitHubLogin}
+                onClick={()=>{setGitHubLogin(true), authService.loginWithGithub()}}
                 startIcon={<GitHub />}
                 sx={{
                   py: 1,

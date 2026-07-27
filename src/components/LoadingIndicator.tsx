@@ -14,7 +14,7 @@ export default function LoadingIndicator() {
         height: 20,
         borderRadius: '50%',
         border: '3px solid transparent',
-        borderTop: '3px solid #FFFFFF',
+        borderTop: '3px solid #df1010',
         animation: `${rotate} 0.8s linear infinite`,
       }}
     />

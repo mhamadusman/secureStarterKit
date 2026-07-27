@@ -1,3 +1,4 @@
+import Profile from '../components/Profile';
 export interface CleanedUserData {
   username: string
   email: string
@@ -11,6 +12,7 @@ export interface CleanedUserData {
 export const mapUserData = (rawData: any): CleanedUserData => {
   const accounts = rawData?.accounts || []
   const activeAccount = accounts[0] || {}
+  console.log(rawData)
 
   return {
     username: rawData?.name || 'User',
@@ -33,6 +35,6 @@ export const mapUserData = (rawData: any): CleanedUserData => {
           year: 'numeric',
         })
       : '',
-    profileImage: rawData?.profileImage || '',
+    profileImage: rawData?.profileImage ||'',
   }
 }
