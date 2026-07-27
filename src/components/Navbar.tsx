@@ -1,17 +1,33 @@
 import { useState } from 'react'
-import { Box, AppBar, Toolbar, Typography, Button, Avatar, IconButton, Divider } from '@mui/material'
+import { Box, AppBar, Toolbar, Typography, Button, Avatar, IconButton, Divider, CircularProgress } from '@mui/material'
 import { Home, AccountCircle, ExitToApp, KeyboardArrowDown } from '@mui/icons-material'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useCurrentUser } from '../hooks/useCurrentUser.hook'
+import { AuthService } from '../Services/authService'
+import { handleApiError, handleApiSuccess } from '../utils/apiHandler'
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false)
     const navigate = useNavigate()
-    const {data} = useCurrentUser()
-    const handleClose = () => {
+    const queryClient = useQueryClient()
+    const { data } = useCurrentUser()
+    const logoutMutation = useMutation({
+        mutationFn: AuthService.logout,
+        onSuccess: (data) => {
+            queryClient.setQueryData(['currentUser'], null)
+            queryClient.cancelQueries()
+            handleApiSuccess(data?.message)
+            navigate('/login', { replace: true })
+        },
+        onError: (error) => {
+            handleApiError(error, undefined, 'Logout failed. Please try again.')
+        }
+    })
+    const handleLogOut = () => {
         setIsOpen(false)
-
+        logoutMutation.mutate()
     }
 
     return (
@@ -68,6 +84,7 @@ export default function Navbar() {
                     <IconButton
                         onClick={() => setIsOpen(!isOpen)}
                         disableRipple
+                        disabled={logoutMutation.isPending}
                         sx={{
                             p: 0.5,
                             gap: 0.5,
@@ -80,7 +97,6 @@ export default function Navbar() {
                             src={data?.profileImage}
                             alt="User Profile"
                             sx={{ width: 36, height: 36, border: '1px solid', borderColor: 'divider' }}
-
                         />
                         <KeyboardArrowDown
                             sx={{
@@ -95,7 +111,7 @@ export default function Navbar() {
                     {/* Simple Full-Screen Clickable Overlay */}
                     {isOpen && (
                         <Box
-                            onClick={handleClose}
+                            onClick={() => setIsOpen(false)}
                             sx={{
                                 position: 'fixed',
                                 top: 0,
@@ -104,7 +120,7 @@ export default function Navbar() {
                                 height: '100vh',
                                 zIndex: 9,
                                 cursor: 'default',
-                                bgcolor: 'transparent', // Keeps it completely invisible
+                                bgcolor: 'transparent',
                             }}
                         />
                     )}
@@ -130,13 +146,16 @@ export default function Navbar() {
                                     borderColor: 'divider',
                                     overflow: 'hidden',
                                     p: 1,
-                                    zIndex: 10 // Placed structurally on top of the fixed backdrop layer
+                                    zIndex: 10
                                 }}
                             >
                                 <Box sx={{ px: 1.5, py: 1 }}>
-                                    <Typography variant="body2" sx={{ fontWeight: 600 }}
-                                    >Jane Doe</Typography>
-                                    <Typography variant="caption" color="text.secondary">jane.doe@uisocial.com</Typography>
+                                    <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                                        {data?.username || 'Jane Doe'}
+                                    </Typography>
+                                    <Typography variant="caption" color="text.secondary">
+                                        {data?.email || 'jane.doe@uisocial.com'}
+                                    </Typography>
                                 </Box>
 
                                 <Divider sx={{ my: 0.5 }} />
@@ -158,9 +177,7 @@ export default function Navbar() {
                                             bgcolor: 'rgba(234, 67, 53, 0.04)',
                                             color: 'primary.main'
                                         }
-
                                     }}
-
                                 >
                                     Profile
                                 </Button>
@@ -168,8 +185,15 @@ export default function Navbar() {
                                 {/* Logout Button */}
                                 <Button
                                     fullWidth
-                                    startIcon={<ExitToApp sx={{ fontSize: '1.2rem' }} />}
-                                    onClick={handleClose}
+                                    disabled={logoutMutation.isPending}
+                                    startIcon={
+                                        logoutMutation.isPending ? (
+                                            <CircularProgress size={16} color="inherit" />
+                                        ) : (
+                                            <ExitToApp sx={{ fontSize: '1.2rem' }} />
+                                        )
+                                    }
+                                    onClick={handleLogOut}
                                     sx={{
                                         justifyContent: 'flex-start',
                                         color: 'text.primary',
@@ -184,7 +208,7 @@ export default function Navbar() {
                                         }
                                     }}
                                 >
-                                    Logout
+                                    {logoutMutation.isPending ? 'Logging out...' : 'Logout'}
                                 </Button>
                             </Box>
                         )}
