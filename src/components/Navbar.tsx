@@ -12,7 +12,7 @@ export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false)
     const navigate = useNavigate()
     const queryClient = useQueryClient()
-    const { data } = useCurrentUser()
+    const { data: user } = useCurrentUser()
     const logoutMutation = useMutation({
         mutationFn: AuthService.logout,
         onSuccess: (data) => {
@@ -94,8 +94,9 @@ export default function Navbar() {
                         }}
                     >
                         <Avatar
-                            src={data?.profileImage}
-                            alt="User Profile"
+                            key={user?.profileImage}
+                            src={user?.profileImage || undefined}
+                            alt={user?.username || 'User'}
                             sx={{ width: 36, height: 36, border: '1px solid', borderColor: 'divider' }}
                         />
                         <KeyboardArrowDown
@@ -151,10 +152,10 @@ export default function Navbar() {
                             >
                                 <Box sx={{ px: 1.5, py: 1 }}>
                                     <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                                        {data?.username || 'Jane Doe'}
+                                        {user?.username || 'Jane Doe'}
                                     </Typography>
                                     <Typography variant="caption" color="text.secondary">
-                                        {data?.email || 'jane.doe@uisocial.com'}
+                                        {user?.email || 'jane.doe@uisocial.com'}
                                     </Typography>
                                 </Box>
 

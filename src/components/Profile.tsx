@@ -41,6 +41,7 @@ export default function Profile() {
           }}
         >
           <Avatar
+            key={user.profileImage}
             src={user.profileImage}
             alt={user.username}
             sx={{

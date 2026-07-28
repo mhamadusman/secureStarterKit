@@ -4,7 +4,8 @@ import { useCurrentUser } from '../hooks/useCurrentUser.hook'
 
 export default function Dashboard() {
   const { data: user } = useCurrentUser()
-  if(!user){
+  console.log('Dashboard user:', user?.profileImage);
+  if (!user) {
     return
   }
   return (
@@ -42,8 +43,9 @@ export default function Dashboard() {
               }}
             >
               <Avatar
-                src={user.profileImage}
-                alt={user.username}
+                key={user?.profileImage}
+                src={user?.profileImage || undefined}
+                alt={user?.username || 'User'}
                 sx={{
                   width: 80,
                   height: 80,
@@ -53,7 +55,7 @@ export default function Dashboard() {
                   boxShadow: '0 4px 14px rgba(234, 67, 53, 0.15)',
                 }}
               />
-              
+
               <Typography variant="h6" sx={{ mb: 0.5, fontWeight: 600 }}>
                 {user.username}
               </Typography>
@@ -61,12 +63,12 @@ export default function Dashboard() {
               <Chip
                 label={user.isEmailVerified ? 'Verified Account' : 'Unverified Account'}
                 size="small"
-                sx={{ 
-                  fontWeight: 600, 
-                  fontSize: '0.7rem', 
+                sx={{
+                  fontWeight: 600,
+                  fontSize: '0.7rem',
                   mb: 2.5,
                   borderRadius: 1.5,
-                  ...(user.isEmailVerified 
+                  ...(user.isEmailVerified
                     ? { bgcolor: 'rgba(46, 125, 50, 0.1)', color: '#1b5e20' }
                     : { bgcolor: 'rgba(237, 108, 2, 0.1)', color: '#e65100' }
                   )

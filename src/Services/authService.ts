@@ -1,5 +1,5 @@
 import api from "../utils/api"
-
+import { env } from "../config/env"
 export class AuthService {
   static async signUp(data: Record<string, any>) {
     const response = await api.post('/auth/sign-up', data)
@@ -47,11 +47,11 @@ export class AuthService {
   }
 
   static loginWithGoogle() {
-    window.location.href = 'http://localhost:5000/api/v1/auth/google'
+    window.location.href = `${env.backendUrl}/auth/google`
   }
 
   static loginWithGithub() {
-    window.location.href = 'http://localhost:5000/api/v1/auth/github'
+    window.location.href = `${env.backendUrl}/auth/github`
   }
 }
 
