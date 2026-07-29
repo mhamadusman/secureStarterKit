@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Box, AppBar, Toolbar, Typography, Button, Avatar, IconButton, Divider, CircularProgress } from '@mui/material'
-import { Home, AccountCircle, ExitToApp, KeyboardArrowDown, Star, GitHub } from '@mui/icons-material'
+import { Home, AccountCircle, ExitToApp, KeyboardArrowDown, Star } from '@mui/icons-material'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
