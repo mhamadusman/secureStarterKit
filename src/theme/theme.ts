@@ -23,8 +23,8 @@ export const theme = createTheme({
       contrastText: '#000000',
     },
     background: {
-      default: '#121212',
-      paper: '#1A1A1A',
+      default: '#080a0c',
+      paper: '#121212',
     },
     text: {
       primary: '#FFFFFF',
@@ -59,15 +59,15 @@ export const theme = createTheme({
     MuiCssBaseline: {
       styleOverrides: {
         body: {
-          backgroundColor: '#121212',
+          backgroundColor: '#080a0c',
           color: '#FFFFFF',
         },
       },
     },
-    // Button styling: White background, black text, hover highlight (white background, no border)
+    // Button styling: Dynamically styled using ownerState to avoid TypeScript errors
     MuiButton: {
       styleOverrides: {
-        root: {
+        root: ({ ownerState }) => ({
           borderRadius: 0,
           boxShadow: 'none',
           backgroundColor: '#FFFFFF',
@@ -75,24 +75,24 @@ export const theme = createTheme({
           border: 'none',
           '&:hover': {
             boxShadow: 'none',
-            backgroundColor: '#E6E6E6', // Highlight background color on hover
+            backgroundColor: '#E6E6E6',
             border: 'none',
             outline: 'none',
           },
-        },
-        // Teal filled buttons (if primary variant is specified, e.g., SIGN IN accent button)
-        containedPrimary: {
-          backgroundColor: tealAccent,
-          color: '#FFFFFF',
-          borderRadius: 20, // Rounded pill shape as seen in the screenshot accent button
-          '&:hover': {
-            backgroundColor: '#008E7E',
-            boxShadow: 'none',
-          },
-        },
+          // Teal filled buttons (when variant="contained" & color="primary")
+          ...(ownerState.variant === 'contained' && ownerState.color === 'primary' && {
+            backgroundColor: tealAccent,
+            color: '#FFFFFF',
+            borderRadius: '20px', // Rounded pill shape as requested
+            '&:hover': {
+              backgroundColor: '#008E7E',
+              boxShadow: 'none',
+            },
+          }),
+        }),
       },
     },
-    // Input Fields: Black background, rectangular, very small text size
+    // Input Fields: Dark background, rectangular, low-profile text size
     MuiTextField: {
       defaultProps: {
         variant: 'outlined',
@@ -104,7 +104,7 @@ export const theme = createTheme({
         root: {
           backgroundColor: '#000000',
           color: '#FFFFFF',
-          fontSize: '0.75rem', // Significantly smaller text size
+          fontSize: '0.75rem',
           borderRadius: 0,
         },
         input: {
@@ -152,17 +152,18 @@ export const theme = createTheme({
         root: {
           borderRadius: 0,
           backgroundImage: 'none',
-          backgroundColor: '#1A1A1A',
+          backgroundColor: '#121212',
         },
       },
     },
     MuiAppBar: {
       styleOverrides: {
         root: {
-          backgroundColor: '#000000',
+          backgroundColor: 'rgba(8, 10, 12, 0.75)',
+          backdropFilter: 'blur(12px)',
           color: '#FFFFFF',
           boxShadow: 'none',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
         },
       },
     },
