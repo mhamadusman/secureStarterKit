@@ -39,7 +39,7 @@ export default function App() {
           hideProgressBar={true} 
           newestOnTop={false}
           closeOnClick={true}    
-          pauseOnHover={false}   
+          pauseOnHover={true}   
           pauseOnFocusLoss={false} 
           draggable={false}
           theme="dark"

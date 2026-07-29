@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { authService, AuthService } from '../Services/authService'
 import { handleApiError } from '../utils/apiHandler'
+import { useQueryClient } from '@tanstack/react-query'
 
 // Custom circular icon components matching social design reference
 const GoogleIconCircle = (props: any) => (
@@ -35,7 +36,8 @@ export default function Login() {
   const [isGitHubLogin, setGitHubLogin] = useState(false)
   const [textIndex, setTextIndex] = useState(0)
   const navigate = useNavigate()
-
+  const queryClient = useQueryClient()
+  
   // Automatic Hero Text Rotation Interval (changes every 3 seconds)
   useEffect(() => {
     const timer = setInterval(() => {
@@ -48,6 +50,7 @@ export default function Login() {
   const onSubmit = async (data: any) => {
     try {
       await AuthService.login(data)
+      await queryClient.invalidateQueries({ queryKey: ['currentUser'] })
       navigate('/dashboard')
     } catch (error) {
       handleApiError(error, undefined, 'Login failed. Please check your credentials.')

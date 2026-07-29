@@ -18,6 +18,7 @@ export default function Navbar() {
     mutationFn: AuthService.logout,
     onSuccess: (data) => {
       queryClient.setQueryData(['currentUser'], null)
+      queryClient.clear()
       queryClient.cancelQueries()
       handleApiSuccess(data?.message)
       navigate('/login', { replace: true })
