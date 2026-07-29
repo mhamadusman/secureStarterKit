@@ -261,7 +261,7 @@ export default function Navbar() {
                       navigate('/profile')
                     }}
                     sx={{
-                      justify: 'flex-start',
+                      justifyContent: 'flex-start',
                       bgcolor: 'transparent',
                       color: 'rgba(255, 255, 255, 0.85)',
                       textTransform: 'none',
