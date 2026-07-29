@@ -37,7 +37,7 @@ export default function Navbar() {
       position="sticky"
       elevation={0}
       sx={{
-        // Glassy Frosted Navbar Effect
+        
         bgcolor: 'rgba(8, 10, 12, 0.75)',
         backdropFilter: 'blur(12px)',
         WebkitBackdropFilter: 'blur(12px)',
@@ -47,18 +47,26 @@ export default function Navbar() {
         zIndex: (theme) => theme.zIndex.drawer + 1
       }}
     >
-      <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', px: { xs: 2, md: 4 }, minHeight: 64 }}>
-
+      <Toolbar
+        sx={{
+          display: 'flex',
+          justify: 'space-between',
+          px: { xs: 1.5, sm: 3, md: 4 },
+          minHeight: { xs: 56, md: 64 },
+        }}
+      >
         {/* Left Side: Logo & Navigation */}
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 1, sm: 2, md: 3 } }}>
           <Typography
             variant="h6"
             sx={{
               fontWeight: 700,
+              fontSize: { xs: '1rem', sm: '1.15rem', md: '1.25rem' },
               color: '#00A896',
-              letterSpacing: '0.5px',
+              letterSpacing: '0.2px',
               cursor: 'pointer',
               fontFamily: '"Poppins", sans-serif',
+              whiteSpace: 'nowrap',
             }}
             onClick={() => navigate('/dashboard')}
           >
@@ -66,23 +74,34 @@ export default function Navbar() {
           </Typography>
 
           <Button
-            startIcon={<Home sx={{ fontSize: '1.2rem', color: '#00A896' }} />}
+            disableRipple
+            startIcon={<Home sx={{ fontSize: { xs: '1.1rem', md: '1.2rem' } }} />}
             sx={{
-              color: 'rgba(255, 255, 255, 0.9)',
+              bgcolor: 'transparent',
+              color: 'rgba(163, 16, 16, 0.85)',
               textTransform: 'none',
               fontWeight: 500,
-              fontSize: '0.85rem',
-              px: 1.5,
-              py: 0.75,
+              fontSize: { xs: '0.75rem', md: '0.85rem' },
+              px: { xs: 1, md: 1.5 },
+              py: 0.5,
+              minWidth: 'auto',
               borderRadius: '6px',
+              border: 'none',
+              boxShadow: 'none',
               '&:hover': {
-                bgcolor: 'rgba(255, 255, 255, 0.05)',
+                bgcolor: 'transparent',
                 color: '#00A896',
-              }
+                boxShadow: 'none',
+                '& .MuiSvgIcon-root': {
+                  color: '#00A896',
+                },
+              },
             }}
             onClick={() => navigate('/dashboard')}
           >
-            Dashboard
+            <Box component="span" sx={{ display: { xs: 'none', sm: 'inline' } }}>
+              Dashboard
+            </Box>
           </Button>
         </Box>
 
@@ -93,34 +112,38 @@ export default function Navbar() {
             disableRipple
             disabled={logoutMutation.isPending}
             sx={{
-              p: 0.5,
-              gap: 0.5,
+              p: { xs: 0.25, md: 0.5 },
+              gap: 0.25,
               borderRadius: '20px',
-              bgcolor: 'rgba(255, 255, 255, 0.05)',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
+              bgcolor: 'transparent',
+              border: '1px solid rgba(255, 255, 255, 0.15)',
               '&:hover': {
-                bgcolor: 'rgba(255, 255, 255, 0.1)',
-                borderColor: 'rgba(255, 255, 255, 0.2)',
-              }
+                bgcolor: 'transparent',
+                borderColor: '#00A896',
+              },
             }}
           >
             <Avatar
               key={user?.profileImage}
               src={user?.profileImage || undefined}
               alt={user?.username || 'User'}
-              sx={{ width: 34, height: 34, border: '1px solid #00A896' }}
+              sx={{
+                width: { xs: 28, md: 34 },
+                height: { xs: 28, md: 34 },
+                border: '1px solid #00A896',
+              }}
             />
             <KeyboardArrowDown
               sx={{
-                fontSize: '1.2rem',
-                color: 'rgba(255, 255, 255, 0.7)',
+                fontSize: { xs: '1rem', md: '1.2rem' },
+                color: isOpen ? '#00A896' : 'rgba(255, 255, 255, 0.7)',
                 transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                transition: 'transform 0.2s ease'
+                transition: 'transform 0.2s ease, color 0.2s ease',
               }}
             />
           </IconButton>
 
-          {/* Simple Full-Screen Clickable Overlay */}
+          {/* Full-Screen Clickable Overlay for Closing Menu */}
           {isOpen && (
             <Box
               onClick={() => setIsOpen(false)}
@@ -149,84 +172,115 @@ export default function Navbar() {
                 sx={{
                   position: 'absolute',
                   right: 0,
-                  top: '120%',
-                  width: 210,
+                  top: '115%',
+                  width: { xs: 180, sm: 210 },
                   bgcolor: '#121212',
                   backdropFilter: 'blur(16px)',
                   boxShadow: '0px 10px 30px rgba(0, 0, 0, 0.8)',
-                  borderRadius: '12px',
+                  borderRadius: '10px',
                   border: '1px solid rgba(255, 255, 255, 0.1)',
                   overflow: 'hidden',
-                  p: 1,
-                  zIndex: 10
+                  p: { xs: 0.75, md: 1 },
+                  zIndex: 10,
                 }}
               >
-                <Box sx={{ px: 1.5, py: 1 }}>
-                  <Typography variant="body2" sx={{ fontWeight: 600, color: '#FFFFFF' }}>
-                    {user?.username || 'Jane Doe'}
+                {/* User Info Header */}
+                <Box sx={{ px: 1, py: 0.75 }}>
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      fontWeight: 600,
+                      color: '#FFFFFF',
+                      fontSize: { xs: '0.75rem', md: '0.85rem' },
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {user?.username || 'User'}
                   </Typography>
                   <Typography
                     variant="caption"
                     sx={{
-                      color: 'rgba(255, 255, 255, 0.6)',
+                      color: 'rgba(255, 255, 255, 0.5)',
+                      fontSize: { xs: '0.65rem', md: '0.75rem' },
                       display: 'block',
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap'
+                      whiteSpace: 'nowrap',
                     }}
                   >
-                    {user?.email || 'jane.doe@uisocial.com'}
+                    {user?.email || ''}
                   </Typography>
                 </Box>
 
                 <Divider sx={{ my: 0.5, borderColor: 'rgba(255, 255, 255, 0.1)' }} />
 
-                {/* Profile Button */}
+                {/* Profile Link Button */}
                 <Button
                   fullWidth
-                  startIcon={<AccountCircle sx={{ fontSize: '1.2rem', color: '#00A896' }} />}
-                  onClick={() => { setIsOpen(false); navigate('/profile'); }}
+                  disableRipple
+                  startIcon={<AccountCircle sx={{ fontSize: { xs: '1rem', md: '1.1rem' } }} />}
+                  onClick={() => {
+                    setIsOpen(false)
+                    navigate('/profile')
+                  }}
                   sx={{
-                    justify: 'flex-start',
+                    justifyContent: 'flex-start',
+                    bgcolor: 'transparent',
                     color: 'rgba(255, 255, 255, 0.85)',
                     textTransform: 'none',
-                    fontSize: '0.85rem',
-                    py: 1,
-                    px: 1.5,
+                    fontSize: { xs: '0.75rem', md: '0.85rem' },
+                    py: 0.75,
+                    px: 1,
                     borderRadius: '6px',
+                    border: 'none',
+                    boxShadow: 'none',
                     '&:hover': {
-                      bgcolor: 'rgba(0, 168, 150, 0.12)',
-                      color: '#00A896'
-                    }
+                      bgcolor: 'transparent',
+                      color: '#00A896',
+                      boxShadow: 'none',
+                      '& .MuiSvgIcon-root': {
+                        color: '#00A896',
+                      },
+                    },
                   }}
                 >
                   Profile
                 </Button>
 
-                {/* Logout Button */}
+                {/* Logout Action Button */}
                 <Button
                   fullWidth
+                  disableRipple
                   disabled={logoutMutation.isPending}
                   startIcon={
                     logoutMutation.isPending ? (
-                      <CircularProgress size={16} sx={{ color: '#00A896' }} />
+                      <CircularProgress size={14} sx={{ color: '#00A896' }} />
                     ) : (
-                      <ExitToApp sx={{ fontSize: '1.2rem', color: '#F44336' }} />
+                      <ExitToApp sx={{ fontSize: { xs: '1rem', md: '1.1rem' } }} />
                     )
                   }
                   onClick={handleLogOut}
                   sx={{
                     justifyContent: 'flex-start',
+                    bgcolor: 'transparent',
                     color: 'rgba(255, 255, 255, 0.85)',
                     textTransform: 'none',
-                    fontSize: '0.85rem',
-                    py: 1,
-                    px: 1.5,
+                    fontSize: { xs: '0.75rem', md: '0.85rem' },
+                    py: 0.75,
+                    px: 1,
                     borderRadius: '6px',
+                    border: 'none',
+                    boxShadow: 'none',
                     '&:hover': {
-                      bgcolor: 'rgba(244, 67, 54, 0.12)',
-                      color: '#F44336'
-                    }
+                      bgcolor: 'transparent',
+                      color: '#F44336',
+                      boxShadow: 'none',
+                      '& .MuiSvgIcon-root': {
+                        color: '#F44336',
+                      },
+                    },
                   }}
                 >
                   {logoutMutation.isPending ? 'Logging out...' : 'Logout'}
@@ -235,7 +289,6 @@ export default function Navbar() {
             )}
           </AnimatePresence>
         </Box>
-
       </Toolbar>
     </AppBar>
   )
