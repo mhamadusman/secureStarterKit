@@ -1,8 +1,9 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import Login from './components/Login'
-import { ToastContainer } from 'react-toastify'
+import { ToastContainer, cssTransition } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import './styles/toast.css'
 import SignUp from './components/SignUp'
 import Dashboard from './components/Dashboard'
 import Profile from './components/Profile'
@@ -19,16 +20,35 @@ const queryClient = new QueryClient({
   },
 })
 
+const SmoothFade = cssTransition({
+  enter: 'Toastify__fade-enter',
+  exit: 'Toastify__fade-exit',
+  appendPosition: false,
+  collapse: true,
+  collapseDuration: 200,
+});
+
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <ToastContainer position="bottom-right" autoClose={4000} />
+        <ToastContainer 
+         position="bottom-right" 
+          autoClose={2000}         
+          transition={SmoothFade}  
+          hideProgressBar={true} 
+          newestOnTop={false}
+          closeOnClick={true}    
+          pauseOnHover={false}   
+          pauseOnFocusLoss={false} 
+          draggable={false}
+          theme="dark"
+        />
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/forget-password" element={<ForgotPassword/>}/>
-          <Route path='/reset-password' element={<ResetPassword />}/>
+          <Route path="/forget-password" element={<ForgotPassword />} />
+          <Route path='/reset-password' element={<ResetPassword />} />
 
           <Route element={<AuthenticatedLayout />}>
             <Route path="/dashboard" element={<Dashboard />} />

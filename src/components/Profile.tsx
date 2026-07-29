@@ -24,10 +24,6 @@ export default function Profile() {
       sx={{
         p: { xs: 2, md: 4 },
         bgcolor: '#080a0c',
-        background: {
-          xs: '#080a0c',
-          md: 'radial-gradient(circle at 50% 50%, #1a2529 0%, #080a0c 100%)',
-        },
         minHeight: 'calc(100vh - 64px)',
         display: 'flex',
         flexDirection: 'column',
@@ -55,10 +51,10 @@ export default function Profile() {
           </Typography>
         </Box>
 
-        {/* Profile Card Container */}
+        {/* Profile Details Container */}
         <Card
           sx={{
-            p: { xs: 3, md: 4 },
+            p: { xs: 0, md: 4 },
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',

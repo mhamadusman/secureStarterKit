@@ -24,13 +24,12 @@ const GitHubIconCircle = (props: any) => (
 )
 
 const taglines = [
-  "Capture your personal memories in a unique way, anywhere.",
   "Secure your application with our authentication kit.",
   "You can start up with our website seamlessly."
 ]
 
 export default function Login() {
-  const { register, handleSubmit, formState: { isSubmitting } } = useForm()
+  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm()
   const [showPassword, setShowPassword] = useState(false)
   const [isGoogleLogin, setGoogleLogin] = useState(false)
   const [isGitHubLogin, setGitHubLogin] = useState(false)
@@ -83,6 +82,10 @@ export default function Login() {
     },
     '& .MuiInputLabel-root.Mui-focused': {
       color: '#00A896',
+    },
+    '& .MuiFormHelperText-root': {
+      fontSize: '0.7rem',
+      mt: 0.5,
     },
   }
 
@@ -288,10 +291,17 @@ export default function Login() {
             {/* Email Input */}
             <TextField
               fullWidth
-              label="Email"
+              label={errors.email?.message ?  errors.email.message as string  : "Email"}
               variant="outlined"
               size="small"
-              {...register('email')}
+              error={!!errors.email}
+              {...register('email', {
+                required: 'Email is required',
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: 'Invalid email address',
+                },
+              })}
               sx={inputStyles}
             />
 
@@ -299,10 +309,13 @@ export default function Login() {
             <TextField
               fullWidth
               type={showPassword ? 'text' : 'password'}
-              label="Password"
+              label={errors.password?.message ?  errors.password.message as string  : "Password"}
               variant="outlined"
               size="small"
-              {...register('password')}
+              error={!!errors.password}
+              {...register('password', {
+                required: 'Password is required',
+              })}
               slotProps={{
                 input: {
                   endAdornment: (
@@ -319,7 +332,7 @@ export default function Login() {
                   ),
                 },
               }}
-              sx={{ ...inputStyles, mb: 0.5 }}
+              sx={{ ...inputStyles, mb: errors.password ? 1.25 : 0.5 }}
             />
 
             {/* Forgot Password Link */}

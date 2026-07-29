@@ -25,10 +25,7 @@ api.interceptors.response.use(
         error.message ??
         ERROR_MESSAGES.UNEXPECTED_ERROR
 
-      toast.error(message, {
-        position: 'bottom-right',
-        autoClose: 5000,
-      })
+      toast.error(message)
       return Promise.reject(error)
     }
 
@@ -53,10 +50,7 @@ api.interceptors.response.use(
         const backendMessage =
           refreshError.response?.data?.message || 'Session expired. Please log in again.'
 
-        toast.error(backendMessage, {
-          position: 'bottom-right',
-          autoClose: 5000,
-        })
+        toast.error(backendMessage)
 
         // Redirect to login page
         window.location.href = '/login'

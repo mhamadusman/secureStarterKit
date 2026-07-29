@@ -32,7 +32,6 @@ interface SignUpFormData {
 }
 
 const taglines = [
-  "Capture your personal memories in a unique way, anywhere.",
   "Secure your application with our authentication kit.",
   "You can start up with our website seamlessly."
 ]

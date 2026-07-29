@@ -1,0 +1,96 @@
+/* Base Glassmorphism Toast Container */
+.Toastify__toast-container {
+  z-index: 99999 !important;
+}
+
+.Toastify__toast {
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  color: #FFFFFF !important;
+  border-radius: 10px !important;
+  box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.6) !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 0.85rem !important;
+  padding: 12px 16px !important;
+  min-height: 52px !important;
+  cursor: pointer !important;
+}
+
+/* Close Button Fixes */
+.Toastify__close-button {
+  color: rgba(255, 255, 255, 0.6) !important;
+  opacity: 0.8 !important;
+  align-self: center !important;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer !important;
+  padding: 4px !important;
+}
+
+.Toastify__close-button:hover {
+  color: #FFFFFF !important;
+  opacity: 1 !important;
+}
+
+/* Keeps autoClose timer running in background without rendering a bar */
+.Toastify__progress-bar {
+  visibility: hidden !important;
+  height: 0 !important;
+}
+
+/* ==========================================
+   SUCCESS TOAST (Glassy Light Teal)
+   ========================================== */
+.Toastify__toast--success {
+  background: rgba(0, 168, 150, 0.18) !important;
+  border: 1px solid rgba(51, 187, 176, 0.4) !important;
+}
+
+.Toastify__toast--success .Toastify__toast-icon svg {
+  fill: #33BBB0 !important;
+}
+
+/* ==========================================
+   ERROR TOAST (Glassy Light Red)
+   ========================================== */
+.Toastify__toast--error {
+  background: rgba(229, 115, 115, 0.18) !important;
+  border: 1px solid rgba(229, 115, 115, 0.4) !important;
+}
+
+.Toastify__toast--error .Toastify__toast-icon svg {
+  fill: #E57373 !important;
+}
+
+/* ==========================================
+   SMOOTH FADE ANIMATIONS
+   ========================================== */
+@keyframes toastFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes toastFadeOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+.Toastify__fade-enter {
+  animation: toastFadeIn 0.3s ease-out forwards !important;
+}
+
+.Toastify__fade-exit {
+  animation: toastFadeOut 0.3s ease-in forwards !important;
+}

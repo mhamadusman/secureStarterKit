@@ -4,10 +4,7 @@ import type { UseFormSetError, FieldValues, Path } from "react-hook-form";
 import type { ApiErrorResponse } from "../types/types.api.response";
 
 export const handleApiSuccess = (message?: string) => {
-  toast.success(message , {
-    position: 'bottom-right',
-    autoClose: 4000,
-  });
+  toast.success(message);
 };
 
 export const handleApiError = <T extends FieldValues>(
@@ -35,24 +32,15 @@ export const handleApiError = <T extends FieldValues>(
       const toastMessage = errorData.message || defaultFallbackMessage;
 
       if (!hasFieldErrors || errorData.message) {
-        toast.error(toastMessage, {
-          position: 'bottom-right',
-          autoClose: 5000,
-        });
+        toast.error(toastMessage);
       }
       return;
     }
   }
 
   if (error instanceof Error) {
-    toast.error(error.message, {
-      position: 'bottom-right',
-      autoClose: 5000,
-    });
+    toast.error(error.message);
   } else {
-    toast.error(defaultFallbackMessage, {
-      position: 'bottom-right',
-      autoClose: 5000,
-    });
+    toast.error(defaultFallbackMessage);
   }
 };

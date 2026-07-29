@@ -37,7 +37,6 @@ export default function Navbar() {
       position="sticky"
       elevation={0}
       sx={{
-        
         bgcolor: 'rgba(8, 10, 12, 0.75)',
         backdropFilter: 'blur(12px)',
         WebkitBackdropFilter: 'blur(12px)',
@@ -50,12 +49,15 @@ export default function Navbar() {
       <Toolbar
         sx={{
           display: 'flex',
-          justify: 'space-between',
+          justifyContent: 'space-between', // Pushes brand/links to left, profile to right
+          alignItems: 'center',
           px: { xs: 1.5, sm: 3, md: 4 },
           minHeight: { xs: 56, md: 64 },
+          width: '100%',
+          boxSizing: 'border-box',
         }}
       >
-        {/* Left Side: Logo & Navigation */}
+        {/* Left Side: Brand Logo & Dashboard Nav Link */}
         <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 1, sm: 2, md: 3 } }}>
           <Typography
             variant="h6"
@@ -75,10 +77,10 @@ export default function Navbar() {
 
           <Button
             disableRipple
-            startIcon={<Home sx={{ fontSize: { xs: '1.1rem', md: '1.2rem' } }} />}
+            startIcon={<Home sx={{ fontSize: { xs: '1.1rem', md: '1.2rem' }, color: '#FFFFFF' }} />}
             sx={{
               bgcolor: 'transparent',
-              color: 'rgba(163, 16, 16, 0.85)',
+              color: '#f9fcfe', // Set Dashboard link text to white
               textTransform: 'none',
               fontWeight: 500,
               fontSize: { xs: '0.75rem', md: '0.85rem' },
@@ -105,14 +107,14 @@ export default function Navbar() {
           </Button>
         </Box>
 
-        {/* Right Side: Circular Profile & Dropdown Wrapper */}
-        <Box sx={{ position: 'relative' }}>
+        {/* Right Side: Profile Dropdown Trigger */}
+        <Box sx={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
           <IconButton
             onClick={() => setIsOpen(!isOpen)}
             disableRipple
             disabled={logoutMutation.isPending}
             sx={{
-              p: { xs: 0.25, md: 0.5 },
+              p: { xs: 0.1, md: 0.1 },
               gap: 0.25,
               borderRadius: '20px',
               bgcolor: 'transparent',
@@ -128,14 +130,14 @@ export default function Navbar() {
               src={user?.profileImage || undefined}
               alt={user?.username || 'User'}
               sx={{
-                width: { xs: 28, md: 34 },
-                height: { xs: 28, md: 34 },
+                width: { xs: 18, md: 34 },
+                height: { xs: 18, md: 34 },
                 border: '1px solid #00A896',
               }}
             />
             <KeyboardArrowDown
               sx={{
-                fontSize: { xs: '1rem', md: '1.2rem' },
+                fontSize: { xs: '0.9rem', md: '1.2rem' },
                 color: isOpen ? '#00A896' : 'rgba(255, 255, 255, 0.7)',
                 transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
                 transition: 'transform 0.2s ease, color 0.2s ease',
@@ -143,7 +145,7 @@ export default function Navbar() {
             />
           </IconButton>
 
-          {/* Full-Screen Clickable Overlay for Closing Menu */}
+          {/* Background Overlay for Closing Menu */}
           {isOpen && (
             <Box
               onClick={() => setIsOpen(false)}
@@ -160,7 +162,7 @@ export default function Navbar() {
             />
           )}
 
-          {/* Smooth Dropdown Menu */}
+          {/* Profile Dropdown Menu */}
           <AnimatePresence>
             {isOpen && (
               <Box
@@ -184,7 +186,7 @@ export default function Navbar() {
                   zIndex: 10,
                 }}
               >
-                {/* User Info Header */}
+                {/* User Information */}
                 <Box sx={{ px: 1, py: 0.75 }}>
                   <Typography
                     variant="body2"
@@ -216,7 +218,7 @@ export default function Navbar() {
 
                 <Divider sx={{ my: 0.5, borderColor: 'rgba(255, 255, 255, 0.1)' }} />
 
-                {/* Profile Link Button */}
+                {/* Profile Navigation Link */}
                 <Button
                   fullWidth
                   disableRipple
@@ -249,7 +251,7 @@ export default function Navbar() {
                   Profile
                 </Button>
 
-                {/* Logout Action Button */}
+                {/* Logout Action */}
                 <Button
                   fullWidth
                   disableRipple

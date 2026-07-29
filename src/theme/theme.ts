@@ -58,9 +58,35 @@ export const theme = createTheme({
   components: {
     MuiCssBaseline: {
       styleOverrides: {
+        html: {
+          msOverflowStyle: 'none', /* IE and Edge */
+          scrollbarWidth: 'none', /* Firefox */
+          '&::-webkit-scrollbar': {
+            display: 'none', /* Chrome, Safari, Opera */
+            width: 0,
+            height: 0,
+          },
+        },
         body: {
           backgroundColor: '#080a0c',
           color: '#FFFFFF',
+          msOverflowStyle: 'none',
+          scrollbarWidth: 'none',
+          '&::-webkit-scrollbar': {
+            display: 'none',
+            width: 0,
+            height: 0,
+          },
+        },
+        // Universal selector to hide scrollbars on all scrollable containers
+        '*': {
+          msOverflowStyle: 'none',
+          scrollbarWidth: 'none',
+          '&::-webkit-scrollbar': {
+            display: 'none',
+            width: 0,
+            height: 0,
+          },
         },
       },
     },
@@ -83,7 +109,7 @@ export const theme = createTheme({
           ...(ownerState.variant === 'contained' && ownerState.color === 'primary' && {
             backgroundColor: tealAccent,
             color: '#FFFFFF',
-            borderRadius: '20px', // Rounded pill shape as requested
+            borderRadius: '20px', // Rounded pill shape
             '&:hover': {
               backgroundColor: '#008E7E',
               boxShadow: 'none',
